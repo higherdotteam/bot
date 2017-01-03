@@ -23,6 +23,5 @@ func main() {
 		c.Redirect(http.StatusMovedPermanently, "http://cordbouquet.tumblr.com/post/143915124906/thank-you")
 	})
 
-	r.Run()
-	//r.RunTLS(":443", "/home/root/go/bin/officecrashe.rs.crt", "/home/root/go/bin/ssl1.key")
+	r.RunTLS(":443", "/etc/letsencrypt/live/higher.team/cert.pem", "/etc/letsencrypt/live/higher.team/privkey.pem")
 }
