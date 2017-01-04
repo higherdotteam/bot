@@ -2,7 +2,7 @@ package main
 
 import "github.com/gin-gonic/gin"
 
-//import "net/http"
+import "net/http"
 import "fmt"
 import "io/ioutil"
 import "encoding/json"
@@ -23,6 +23,15 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		data := gin.H{"nav_dash": true}
 		c.HTML(200, "index.tmpl", data)
+	})
+	r.GET("/slack", func(c *gin.Context) {
+		// https://higher.team/slack?code=2305278787c0&state=
+		/*		    url = "https://" + team + ".slack.com/api/oauth.access?client_id=" +
+		ENV['SLACK_CID'] + "&client_secret=" + ENV['SLACK_SECRET'] +
+		"&code=" + code
+		response = Net::HTTP.get_response(URI.parse(url)) */
+
+		c.Redirect(http.StatusMovedPermanently, "http://higher.team/")
 	})
 	r.POST("/slack", func(c *gin.Context) {
 		body := c.Request.Body
