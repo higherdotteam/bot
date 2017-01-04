@@ -33,8 +33,7 @@ func main() {
 
 		fmt.Printf("%v", result)
 
-		//data := gin.H{"nav_dash": true}
-		c.String(200, "wefwef")
+		c.String(200, result.Challenge)
 	})
 
 	//r.RunTLS(":443", "/etc/letsencrypt/live/higher.team/fullchain.pem", "/etc/letsencrypt/live/higher.team/privkey.pem")
