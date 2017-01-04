@@ -5,6 +5,14 @@ import "github.com/gin-gonic/gin"
 //import "net/http"
 import "fmt"
 import "io/ioutil"
+import "encoding/json"
+
+type SlackResponse struct {
+	// "type": "url_verification", "token": "QTT8T3f8VFmZ2MvH4m3jLBCh", "challenge": "q2TjwXAtQrPYt9ts3pxAmg3ryaNV0Cgo3OS9xJFlkghzuRkawyIe"
+	Type      string `json:"type"`
+	Token     string `json:"token"`
+	Challenge string `json:"challenge"`
+}
 
 func main() {
 	fmt.Println("start...")
@@ -20,7 +28,10 @@ func main() {
 		body := c.Request.Body
 		x, _ := ioutil.ReadAll(body)
 
-		fmt.Printf("%s \n", string(x))
+		result := SlackResponse{}
+		json.Unmarshal(x, &result)
+
+		fmt.Printf("%v", result)
 
 		//data := gin.H{"nav_dash": true}
 		c.String(200, "wefwef")
