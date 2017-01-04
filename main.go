@@ -4,6 +4,7 @@ import "github.com/gin-gonic/gin"
 
 //import "net/http"
 import "fmt"
+import "io/ioutil"
 
 func main() {
 	fmt.Println("start...")
@@ -16,6 +17,11 @@ func main() {
 		c.HTML(200, "index.tmpl", data)
 	})
 	r.POST("/slack", func(c *gin.Context) {
+		body := c.Request.Body
+		x, _ := ioutil.ReadAll(body)
+
+		fmt.Printf("%s \n", string(x))
+
 		//data := gin.H{"nav_dash": true}
 		c.String(200, "wefwef")
 	})
