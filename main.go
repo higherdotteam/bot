@@ -6,6 +6,7 @@ import "net/http"
 import "fmt"
 import "io/ioutil"
 import "encoding/json"
+import "os"
 
 type SlackResponse struct {
 	// "type": "url_verification", "token": "QTT8T3f8VFmZ2MvH4m3jLBCh", "challenge": "q2TjwXAtQrPYt9ts3pxAmg3ryaNV0Cgo3OS9xJFlkghzuRkawyIe"
@@ -25,11 +26,11 @@ func main() {
 		c.HTML(200, "index.tmpl", data)
 	})
 	r.GET("/slack", func(c *gin.Context) {
-		// https://higher.team/slack?code=2305278787c0&state=
-		/*		    url = "https://" + team + ".slack.com/api/oauth.access?client_id=" +
-		ENV['SLACK_CID'] + "&client_secret=" + ENV['SLACK_SECRET'] +
-		"&code=" + code
-		response = Net::HTTP.get_response(URI.parse(url)) */
+		r, _ := http.Get("https://slack.com/api/oauth.access?client_id=" + os.Getenv("HDT_CID") + "&client_secret=" +
+			os.Getenv("HDT_SECRET") + "&code=" + c.Query("code"))
+		defer r.Body.Close()
+		body, _ := ioutil.ReadAll(r.Body)
+		fmt.Println(string(body))
 
 		c.Redirect(http.StatusMovedPermanently, "http://higher.team/")
 	})
@@ -45,6 +46,6 @@ func main() {
 		c.String(200, result.Challenge)
 	})
 
-	//r.RunTLS(":443", "/etc/letsencrypt/live/higher.team/fullchain.pem", "/etc/letsencrypt/live/higher.team/privkey.pem")
-	r.Run()
+	r.RunTLS(":443", "/etc/letsencrypt/live/higher.team/fullchain.pem", "/etc/letsencrypt/live/higher.team/privkey.pem")
+	//r.Run()
 }
