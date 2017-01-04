@@ -10,7 +10,8 @@ func main() {
 	r.LoadHTMLGlob("templates/*.tmpl")
 	r.Static("/assets", "./assets")
 
-	r.GET("/", func(c *gin.Context) {
+	r.POST("/", func(c *gin.Context) {
+fmt.Println("111111")
 		data := gin.H{"nav_dash": true}
 		c.HTML(200, "index.tmpl", data)
 	})
@@ -23,5 +24,5 @@ func main() {
 		c.Redirect(http.StatusMovedPermanently, "http://cordbouquet.tumblr.com/post/143915124906/thank-you")
 	})
 
-	r.RunTLS(":443", "/etc/letsencrypt/live/higher.team/cert.pem", "/etc/letsencrypt/live/higher.team/privkey.pem")
+	r.RunTLS(":443", "/etc/letsencrypt/live/higher.team/fullchain.pem", "/etc/letsencrypt/live/higher.team/privkey.pem")
 }
